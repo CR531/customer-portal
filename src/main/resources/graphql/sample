@@ -1,0 +1,41 @@
+type Query {
+    customerDetails:[Customer]
+    customerDetailsById:Customer
+    firstNCustomers(limit: Int): [Customer]
+	customersByAddress(addressFilter: AddressFilter): [Customer]
+}
+type Mutation {
+   	createCustomer(firstName: String, lastName: String, email: String, phoneNumber: String String): CustomerCreated
+	retireSubscription(firstName: String, lastName: String, email: String, phoneNumber: String String): SubscriptionRetire
+}
+type CustomerCreated {
+    customerId:
+}
+
+type SubscriptionRetire {
+    customerId:
+subscriptionId:
+}
+
+type Customer {
+    customerId: ID!
+    firstName: String
+    lastName: String
+    email: String!
+    phoneNumber: Int
+	creationDate: String
+    addressDetails: [Address]
+}
+type Address {
+    addressId: ID!
+    address1: String
+    address2: String
+    city: String
+    state: String
+    postalCode: String
+}
+enum AddressFilter {
+Delhi,
+Noida,
+Banglore
+}
