@@ -136,6 +136,7 @@
                             <excludes>
                                 <exclude>**/src/test/**</exclude>
                                 <exclude>**/model/**</exclude>
+                                <exclude>**/CustomerPortalApplication.java/**</exclude>
                             </excludes>
                         </configuration>
                     </execution>

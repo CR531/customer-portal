@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @OpenAPIDefinition
-@SpringBootApplication(scanBasePackages = {"com.example.customerportal.service"})
+@SpringBootApplication
 @Slf4j
 public class CustomerPortalApplication extends SpringBootServletInitializer {
 

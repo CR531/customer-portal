@@ -1,4 +1,5 @@
 package com.example.customerportal.service;
+
 import com.example.customerportal.graphql.repository.CustomerRepository;
 import com.example.customerportal.model.Address;
 import com.example.customerportal.model.Customer;
@@ -12,17 +13,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private CustomerRepository customerRepository;
 
-    private final CustomerRepository customerRepository;
+    public CustomerServiceImpl(CustomerRepository customerRepository, JdbcTemplate jdbcTemplate) {
+        this.customerRepository = customerRepository;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    public CustomerServiceImpl() {
     }
 
     /**
@@ -70,17 +80,12 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-//    @Transactional(readOnly = true)
-//    public CustomerObj getCustomersByAddress() {
-//        return new CustomerObj();
-//    }
-
-
     @Transactional
     @Override
-    public CustomerCreated createCustomer(final String customer_id, final String first_name, final String last_name, final String email_id, final long phone_number, final String creation_date) {
+    public CustomerCreated createCustomer(final String first_name, final String last_name, final String email_id, final long phone_number, final String creation_date) {
         final Customer customer = new Customer();
-        customer.setCustomer_id(customer_id);
+        String generatedString = getRandomCustomerId();
+        customer.setCustomer_id(generatedString);
         customer.setFirst_name(first_name);
         customer.setLast_name(last_name);
         customer.setEmail_id(email_id);
@@ -92,6 +97,22 @@ public class CustomerServiceImpl implements CustomerService {
             return new CustomerCreated(customer.getCustomer_id());
         else
             return new CustomerCreated();
+    }
+
+    @Override
+    public String getRandomCustomerId() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
     }
 
     /**

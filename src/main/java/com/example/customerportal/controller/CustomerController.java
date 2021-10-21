@@ -6,6 +6,7 @@ import com.example.customerportal.model.CustomerObj;
 import com.example.customerportal.service.CustomerService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +18,18 @@ import java.util.List;
 
 
 @RestController
-@Validated
 @RequestMapping("/api")
 @Api(tags = "Customer Api Provider")
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    CustomerServiceImpl customerService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    @GetMapping(value = "/health", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String healthCheck() {
+        return "I'm healthy";
     }
-//    @Autowired
-//    CustomerServiceImpl customerServiceImpl;
 
     @GetMapping("/v1/customers")
     public ResponseEntity<List<CustomerObj>> getCustomers(@RequestParam(defaultValue = "10", required = true) int limit) {
@@ -63,7 +63,7 @@ public class CustomerController {
         CustomerCreated customerCreated = null;
 
         try {
-            customerCreated = customerService.createCustomer(customer.getCustomer_id(), customer.getFirst_name(), customer.getLast_name(), customer.getEmail_id(), customer.getPhone_number(), customer.getCreation_date());
+            customerCreated = customerService.createCustomer(customer.getFirst_name(), customer.getLast_name(), customer.getEmail_id(), customer.getPhone_number(), customer.getCreation_date());
         } catch (Exception e) {
             e.printStackTrace();
         }

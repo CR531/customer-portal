@@ -99,6 +99,28 @@ query {
 }
 }
 
+**To get customers with specific address(i.e. Enum)**
+
+query {
+  customersByAddress(addressFilter:Delhi)
+  {
+    customer_id,
+    first_name,
+    last_name,
+    email_id,
+    phone_number,
+    creation_date,
+    addressDetails{
+      address_id,
+      address1,
+      address2,
+      city,
+      state,
+      postal_code,
+      last_update_date
+    }
+}
+}
 # Testing using postman
 POST:http://localhost:8080/api/customers/
 

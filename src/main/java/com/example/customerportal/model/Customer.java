@@ -84,4 +84,20 @@ public class Customer implements Serializable {
         this.creation_date = creation_date;
     }
 
+    public Customer(String customer_id, String first_name, String last_name, String email_id, long phone_number, String creation_date) {
+        this.customer_id = customer_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email_id = email_id;
+        this.phone_number = phone_number;
+        this.creation_date = creation_date;
+    }
+
+    public Customer(String first_name, String last_name, String email_id, long phone_number, String creation_date) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email_id = email_id;
+        this.phone_number = phone_number;
+        this.creation_date = creation_date;
+    }
 }
